@@ -4,6 +4,7 @@ import Main from '@/components/Main'
 import Login from '@/components/Login'
 import kaoshi from '@/components/kaoshi'
 import view from '@/components/view'
+import result from '@/components/result'
 
 Vue.use(Router)
 
@@ -24,6 +25,10 @@ var router= new Router({
       {
           path:"/view",
           component:view
+      },
+      {
+          path:"/result",
+          component:result
       }
   ]
 })

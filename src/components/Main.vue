@@ -10,8 +10,7 @@
 
         <div class="mui-content">
            <slider :nums="sliders.length">
-              <div class="slider-list" v-for="item in sliders"  :style="{background:'url('+item.img+') no-repeat center','background-size':'100% 100%',width:'33.33333%',height:'100%'}">
-              </div>
+
            </slider>
 
 

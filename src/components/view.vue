@@ -3,6 +3,9 @@
         <header class="mui-bar mui-bar-nav">
             <a class="mui-icon mui-icon-left-nav mui-pull-left" @click.prevent="back($event)"></a>
             <h1 class="mui-title">开始考试</h1>
+            <span class="mui-pull-right" @click="show" style="line-height: 44px;">
+                完成
+            </span>
         </header>
 
         <div class="mui-content">
@@ -17,6 +20,7 @@
 
                     <div class="mui-input-row mui-radio" v-for="(opt,optkey) in item.options">
                         <label> {{optkey*1+1}}. {{opt}}</label>
+
                         <input :name="key" type="radio" v-model="item.info" :value="optkey">
                     </div>
 
@@ -44,16 +48,14 @@
 
                     <div class="mui-input-row mui-checkbox" v-for="(opt,optkey) in item.options">
                         <label>{{optkey*1+1}}. {{opt}}</label>
-                        <input name="checkbox1" value="abc" type="checkbox" v-model="item.info" :value="optkey">
+                        <input name="checkbox1"  type="checkbox" v-model="item.info" :value="optkey">
                     </div>
 
                 </div>
-                <div class="line"> </div>
+                <div class="line">
+
+                </div>
             </div>
-
-            <input type="button" value="点击" @click="show">
-
-
         </div>
 
 
@@ -68,7 +70,9 @@
                 <div>
                     答案:
                     <div>
-                        {{item.daan}}
+                        <textarea name="" id="" width="100%" height="50px" v-model="item.info">
+
+                        </textarea>
                     </div>
                 </div>
 
@@ -88,8 +92,51 @@
                 this.$router.go(-1);
             },
             show(){
-                console.log(this.raidoData)
-                console.log(this.checkData)
+                var zid=this.$route.query.id;
+                var sid=JSON.parse(sessionStorage.stuLogin).id;
+                var cid=JSON.parse(sessionStorage.stuLogin).cid;
+
+                var selectSuccess="";
+                var selectErr="";
+                var selectScore=0;
+
+
+                var arr=this.raidoData.concat(this.checkData);
+
+                for(var i=0;i<arr.length;i++){
+                    if(arr[i].info instanceof  Array){
+                        arr[i].info=arr[i].info.join("|");
+                    }
+                    if(arr[i].info==arr[i].daan){
+                        selectSuccess+=arr[i].id+":"+arr[i].score+"|";
+                        selectScore+=parseInt(arr[i].score);
+                    }else{
+                        selectErr+=arr[i].id+"|"
+                    }
+                }
+                selectSuccess=selectSuccess.slice(0,-1);
+                selectErr=selectErr.slice(0,-1);
+
+                var jianda="";
+
+               for(var i=0;i<this.jiandaData.length;i++){
+
+                   jianda+=this.jiandaData[i].id+":"+this.jiandaData[i].info;
+               }
+               var jiandaScore="";
+               var status=1;
+
+               var params="zid="+zid+"&sid="+sid+"&cid="+cid+"&selectSuccess="+selectSuccess+"&selectErr="+selectErr+"&jianda="+jianda+"&jiandaScore="+jiandaScore+"&status="+status;
+
+               fetch("/api/stukaoshi/result?"+params).then(function (e) {
+                   return e.text();
+               }).then((e)=>{
+                    if(e=="ok"){
+                        this.$router.push("/result?score="+selectScore)
+                    }
+               })
+
+
             }
         },
 
@@ -110,6 +157,8 @@
         },
         mounted(){
 
+
+
             var id=this.$route.query.id
             fetch("/api/stukaoshi/shiti?id="+id).then(function (e) {
                 return e.json();
@@ -124,7 +173,6 @@
                         this.jiandaData.push(e[i])
                     }
                 }
-
 
             })
 
