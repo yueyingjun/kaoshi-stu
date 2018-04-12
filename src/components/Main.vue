@@ -22,7 +22,7 @@
                </router-link>
                <li class="opt">
                    <span class="mui-icon mui-icon mui-icon-compose"></span>
-                   <div class="info">我要出题</div>
+                   <div class="info">已考试题</div>
                </li>
                <li class="opt">
                    <span class="mui-icon mui-icon mui-icon-compose"></span>

@@ -159,19 +159,24 @@
 
 
 
-            var id=this.$route.query.id
-            fetch("/api/stukaoshi/shiti?id="+id).then(function (e) {
+            var id=this.$route.query.id;
+            var sid=JSON.parse(sessionStorage.stuLogin).id;
+            fetch("/api/stukaoshi/shiti?id="+id+"&sid="+sid).then(function (e) {
                 return e.json();
             }).then((e)=>{
-                console.log(e);
-                for(var i=0;i<e.length;i++){
-                    if(e[i].typeid==1){
-                        this.raidoData.push(e[i])
-                    }else  if(e[i].typeid==2){
-                        this.checkData.push(e[i])
-                    }else{
-                        this.jiandaData.push(e[i])
+                if(e=="ok") {
+                    for (var i = 0; i < e.length; i++) {
+                        if (e[i].typeid == 1) {
+                            this.raidoData.push(e[i])
+                        } else if (e[i].typeid == 2) {
+                            this.checkData.push(e[i])
+                        } else {
+                            this.jiandaData.push(e[i])
+                        }
                     }
+                }else{
+                    alert("考过");
+                    this.$router.push("/")
                 }
 
             })

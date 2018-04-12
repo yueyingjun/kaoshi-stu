@@ -33,11 +33,27 @@
                 var start=new Date(item.start).getTime();
                 var end=new Date(item.end).getTime();
                 var nowtime=new Date().getTime();
-                if(nowtime>start && nowtime<end) {
-                    this.$router.push("/view?id="+item.id)
-                }else{
-                    alert("请等待开考时间");
-                }
+
+                var zid=item.id;
+                var sid=JSON.parse(sessionStorage.stuLogin).id;
+
+                var params="zid="+zid+"&sid="+sid;
+                fetch("/api/stukaoshi/check?"+params).then(function (e) {
+          return e.text();
+                }).then((e)=>{
+                    if(e=="ok"){
+                        if(nowtime>start && nowtime<end) {
+                            this.$router.push("/view?id="+item.id)
+                        }else{
+                            alert("请等待开考时间");
+                        }
+                    }else{
+                        alert("考过");
+                    }
+                })
+
+
+
             }
         },
         data(){
