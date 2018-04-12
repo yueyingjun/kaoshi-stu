@@ -9,21 +9,21 @@
     </header>
 
         <div class="mui-content">
+
            <slider :nums="sliders.length">
 
            </slider>
 
-
            <ul class="opts">
-
                <router-link to="/kaoshi" tag="li" class="opt">
                      <span class="mui-icon mui-icon mui-icon-compose"></span>
                      <div class="info">我要考试</div>
                </router-link>
-               <li class="opt">
+               <router-link to="/kaoshied" tag="li" class="opt">
                    <span class="mui-icon mui-icon mui-icon-compose"></span>
                    <div class="info">已考试题</div>
-               </li>
+               </router-link>
+
                <li class="opt">
                    <span class="mui-icon mui-icon mui-icon-compose"></span>
                    <div class="info">我要出题</div>
@@ -31,8 +31,7 @@
 
            </ul>
 
-
-            <ul class="opts">
+           <ul class="opts">
                 <li class="opt">
                     <span class="mui-icon  mui-icon-star"></span>
                     <div class="info">我要出题</div>

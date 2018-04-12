@@ -5,6 +5,12 @@ import Login from '@/components/Login'
 import kaoshi from '@/components/kaoshi'
 import view from '@/components/view'
 import result from '@/components/result'
+import kaoshied from '@/components/kaoshied'
+
+import kaoshiedInfo from '@/components/kaoshiedInfo'
+import daanInfo from '@/components/daanInfo'
+
+
 
 Vue.use(Router)
 
@@ -29,6 +35,18 @@ var router= new Router({
       {
           path:"/result",
           component:result
+      },
+      {
+          path:"/kaoshied",
+          component:kaoshied
+      },
+      {
+          path:"/kaoshiedInfo/:zutiid",
+          component:kaoshiedInfo
+      },
+      {
+          path:"/daanInfo/:id",
+          component:daanInfo
       }
   ]
 })
