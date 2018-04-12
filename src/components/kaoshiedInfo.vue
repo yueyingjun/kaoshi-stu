@@ -2,7 +2,7 @@
     <div>
         <header class="mui-bar mui-bar-nav">
             <a class="mui-icon mui-icon-left-nav mui-pull-left" @click.prevent="back($event)"></a>
-            <h1 class="mui-title">开始考试</h1>
+            <h1 class="mui-title">考试信息  总分({{totalScore}})</h1>
 
         </header>
 
@@ -74,8 +74,11 @@
                     <div>
                         <textarea name="" id="" width="100%" height="50px" v-model="item.info">
 
+
                         </textarea>
                     </div>
+
+
                 </div>
 
                 <div class="line"> </div>
@@ -107,7 +110,8 @@
                 jiandaData:[
 
                 ],
-                totalScore:0
+                totalScore:0,
+
             }
         },
         mounted(){
@@ -117,7 +121,13 @@
                 return e.json();
             }).then((e)=>{
 
+                     console.log(e);
                     for (var i = 0; i < e.length; i++) {
+
+                        if(e[i].ok=="yes"){
+                           var score= e[i].score?parseInt(e[i].score):0;
+                           this.totalScore+=score;
+                        }
                         if (e[i].typeid == 1) {
                             this.raidoData.push(e[i])
                         } else if (e[i].typeid == 2) {
@@ -126,6 +136,8 @@
                             this.jiandaData.push(e[i])
                         }
                     }
+
+
 
 
             })

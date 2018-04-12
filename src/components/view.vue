@@ -164,7 +164,11 @@
             fetch("/api/stukaoshi/shiti?id="+id+"&sid="+sid).then(function (e) {
                 return e.json();
             }).then((e)=>{
-                if(e=="ok") {
+                if(e=="err") {
+                    alert("考过");
+                    this.$router.push("/")
+                }else{
+
                     for (var i = 0; i < e.length; i++) {
                         if (e[i].typeid == 1) {
                             this.raidoData.push(e[i])
@@ -174,9 +178,6 @@
                             this.jiandaData.push(e[i])
                         }
                     }
-                }else{
-                    alert("考过");
-                    this.$router.push("/")
                 }
 
             })
